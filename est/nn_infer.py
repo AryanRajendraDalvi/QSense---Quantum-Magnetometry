@@ -62,7 +62,7 @@ def extract_features(counts: np.ndarray, n: np.ndarray,
     if repeat_counts is not None and k > 1:
         rc = np.asarray(repeat_counts, dtype=np.float64)  # (k, J)
         rep_freq = rc / SHOTS_PER_TAU                     # (k, J)
-        var_rep = rep_freq.var(axis=0)                    # (J,)
+        var_rep = rep_freq.var(axis=0, ddof=1)            # (J,)
     else:
         var_rep = np.zeros(J, dtype=np.float64)
 
