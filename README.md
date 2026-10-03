@@ -120,3 +120,8 @@ python -m bench.run_benchmark --trials 2000 --k 4 16 --suite harsh --include-b3 
 python -m bench.run_benchmark --trials 2000 --k 4 16 --suite harsh --include-b3 --include-nn \
   --output results/benchmark.json
 ```
+
+## Evaluation Notes & Caveats
+- **Simulator Validation**: The `qiskit-aer` cross-check validates the analytic Ramsey formula specifically for exponential decay (p=1). The other noise modes (decay shape variations, temporal AR(1) drift, visibility contrast) are phenomenological model extensions designed to test estimator robustness, and are not directly validated by a quantum circuit simulator.
+- **NN Inference Limitation**: The neural network relies heavily on over-dispersion features to detect unmodeled noise. These features require per-repeat shot counts. If a user uploads a standard pooled-count CSV to the Streamlit app, the NN is automatically disabled and only the Bayesian methods (B1/B2/B3) will run.
+- **Reporting**: B3's performance on the pre-registered drift threshold (0.901 is not < 0.90) was a marginal/gray-zone result. The NN's performance will be reported with the exact same rigor, win or lose.
