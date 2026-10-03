@@ -1,0 +1,6 @@
+__pycache__/
+.pytest_cache/
+.deps/
+artifacts/*.npz
+results/*.json
+figures/*.png

@@ -1,0 +1,15 @@
+# Core dependencies (always required)
+numpy>=1.26
+streamlit>=1.38
+matplotlib>=3.8
+pandas>=2.0
+
+# Testing
+pytest>=8.0
+
+# NN training (required on Kaggle / GPU machine, optional locally)
+# torch>=2.3
+
+# Qiskit crosscheck (optional, for test_qiskit_crosscheck.py)
+# qiskit>=1.0
+# qiskit-aer>=0.15
