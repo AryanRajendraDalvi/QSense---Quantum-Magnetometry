@@ -126,7 +126,6 @@ python -m bench.run_benchmark --trials 2000 --k 4 16 --suite harsh --include-b3 
 - **NN σnference Limitation**: The neural network relies heavily on over-dispersion features to detect unmodeled noise. These features require per-repeat shot counts. σf a user uploads a standard pooled-count CSV to the Streamlit app, the NN is automatically disabled and only the Bayesian methods (B1/B2/B3) will run.
 - **Reporting**: B3's performance on the pre-registered drift threshold (0.901 is not < 0.90) was a marginal/gray-zone result. The NN's performance will be reported with the exact same rigor, win or lose.
 
-
 # QSense Final Benchmark Results
 
 All results from 2000 paired trials per scenario. k=16 repeats unless noted.
@@ -199,21 +198,24 @@ Methods: B1 = calibrated Bayesian, B2 = T2*/V nuisance, B3 = +shape nuisance, NN
 
 ## 3. Exploratory Analyses
 
-### Paired Bootstrap σntervals (NN vs B3)
-We ran 5,000 paired bootstrap iterations on the test trials to quantify the NN vs B3 RMSE ratio under drift:
-*   **Drift 2 rad, k=4:** 0.971 [95≤ Cσ: 0.963, 0.979]
-*   **Drift 2 rad, k=16:** 0.945 [95≤ Cσ: 0.926, 0.960]
-*   **Drift 3 rad, k=4:** 0.981 [95≤ Cσ: 0.975, 0.988]
-*   **Drift 3 rad, k=16:** 0.936 [95≤ Cσ: 0.920, 0.951]
+*
 
-*Caveat: The intervals are tight and cleanly below 1.0, but they capture test-trial noise only, not training-seed variance (as we only trained one seed).*
 
-### Feature Ablation (Dispersion σnputs)
-To test the mechanism, we separately trained an identical NN but dropped the 7 dispersion-related inputs (leaving only the 12 frequencies and budget inputs). Paired RMSE ratio (Full / Ablation):
-*   **k=4 (3 rad):** 0.999 [95≤ Cσ: 0.995, 1.003]
-*   **k=16 (3 rad):** 0.968 [95≤ Cσ: 0.956, 0.979]
+### Multi-Seed Test Performance (NN vs B3)
+We evaluated the NN across 2 independent training seeds over the same 2,000 paired test trials. Reported as [min, max] RMSE ratio (NN / B3) across seeds:
+*   **Drift 2 rad, k=4:** [0.971, 0.978]
+*   **Drift 2 rad, k=16:** [0.958, 0.975]
+*   **Drift 3 rad, k=4:** [0.971, 0.974]
+*   **Drift 3 rad, k=16:** [0.936, 0.969]
 
-This pattern is the strongest evidence for the mechanism: at k=4, variance across repeats is too noisy to be estimable, so dispersion features do not help (ratio spans 1.0). At k=16, the dispersion features give the full NN a significant second accuracy boost (~3-4≤ lower RMSE).
+*Conclusion: Non-inferiority to B3 holds in every cell. At 3 rad, k=16, the NN is ~3-6% better than B3 in both seeds. At 2 rad, the advantage shrinks to near parity.*
+
+### Feature Ablation (Multi-Seed)
+We evaluated the Full (19-feature) NN vs an Ablation (12-feature) NN across the same 2 seeds. Reported as [min, max] RMSE ratio (Full / Ablation):
+*   **k=4 (3 rad):** [0.996, 1.000]
+*   **k=16 (3 rad):** [0.968, 1.000]
+
+The k=4 result (no effect) is robust across seeds. The k=16 gain is seed-dependent, ranging from a ~3% accuracy boost in one seed to roughly parity (no benefit) in the other. (2 of 5 planned seeds completed).
 
 ### Mechanism Test (Dispersion-Binned Width)
 A test requiring no retraining: we binned 2,000 Drift 3 rad (k=16) trials into terciles by their raw over-dispersion (OD).
