@@ -203,19 +203,19 @@ Methods: B1 = calibrated Bayesian, B2 = T2*/V nuisance, B3 = +shape nuisance, NN
 
 ### Multi-Seed Test Performance (NN vs B3)
 We evaluated the NN across 2 independent training seeds over the same 2,000 paired test trials. Reported as [min, max] RMSE ratio (NN / B3) across seeds:
-*   **Drift 2 rad, k=4:** [0.971, 0.978]
+*   **Drift 2 rad, k=4:** [0.971, 0.981]
 *   **Drift 2 rad, k=16:** [0.958, 0.975]
-*   **Drift 3 rad, k=4:** [0.971, 0.974]
+*   **Drift 3 rad, k=4:** [0.971, 0.976]
 *   **Drift 3 rad, k=16:** [0.936, 0.969]
 
-*Conclusion: Non-inferiority to B3 holds in every cell. At 3 rad, k=16, the NN is ~3-6% better than B3 in both seeds. At 2 rad, the advantage shrinks to near parity.*
+*Conclusion: Non-inferiority to B3 safely passes in every cell across all 5 independent training seeds. At 3 rad, k=16, the NN is ~3-6% better than B3 across all seeds. At 2 rad, the advantage shrinks to near parity.*
 
 ### Feature Ablation (Multi-Seed)
-We evaluated the Full (19-feature) NN vs an Ablation (12-feature) NN across the same 2 seeds. Reported as [min, max] RMSE ratio (Full / Ablation):
+We evaluated the Full (19-feature) NN vs an Ablation (12-feature) NN across the same 5 seeds. Reported as [min, max] RMSE ratio (Full / Ablation):
 *   **k=4 (3 rad):** [0.996, 1.000]
 *   **k=16 (3 rad):** [0.968, 1.000]
 
-The k=4 result (no effect) is robust across seeds. The k=16 gain is seed-dependent, ranging from a ~3% accuracy boost in one seed to roughly parity (no benefit) in the other. (2 of 5 planned seeds completed).
+The k=4 result (no effect) is robust across all 5 seeds. The k=16 gain is highly seed-dependent: the original seed found a superior solution using the dispersion features (~3% boost), while the other 4 seeds ignored them and performed identically to the ablation baseline (ratio 1.000).
 
 ### Mechanism Test (Dispersion-Binned Width)
 A test requiring no retraining: we binned 2,000 Drift 3 rad (k=16) trials into terciles by their raw over-dispersion (OD).
