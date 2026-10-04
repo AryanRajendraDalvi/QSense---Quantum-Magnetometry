@@ -95,6 +95,10 @@ class QSenseNetNumpy:
 
     def logits(self, x: np.ndarray) -> np.ndarray:
         """x : (..., 19) → logits (..., 1024)"""
+        # Automatically handle 12-feature ablation networks
+        if self.W0.shape[1] < x.shape[-1]:
+            x = x[..., :self.W0.shape[1]]
+            
         h = np.maximum(x @ self.W0.T + self.b0, 0.0)
         h = np.maximum(h @ self.W1.T + self.b1, 0.0)
         return h @ self.W2.T + self.b2

@@ -271,3 +271,15 @@ OOD notes:
 3. **H3 (NN matches or beats B3 on accuracy under drift): TRUE.** NN RMSE is 3–6% below B3 at drift 2–3 rad.
 
 **NN win on pre-registered criteria**: RMSE criterion passes at both drift levels. Coverage criterion passes at drift 3 rad, marginally fails at drift 2 rad (0.973 vs 0.97 upper bound). Overall: **partial win, honest result**.
+
+
+## Feature Ablation (Dispersion Inputs)
+
+We trained an identical NN but dropped the 7 dispersion-related inputs (leaving only the 12 frequencies and budget inputs) to see if mixture training alone handles drift, or if the dispersion features actively help.
+
+**Drift 3 rad (k=16):**
+- B3: RMSE = 0.3805 µT, cov95 = 0.904
+- **NN (12 feat ablation):** RMSE = 0.3689 µT, cov95 = 0.961
+- **NN (19 feat full):** RMSE = **0.3594 µT**, cov95 = **0.965**
+
+**Conclusion:** Mixture training *alone* (the ablation NN) improves upon B3 by outputting globally wider, more robust posteriors. However, the **dispersion features give the full NN a significant second accuracy boost** (~3% lower RMSE) because they allow the network to *dynamically detect* which specific trials are corrupted by drift and down-weight those specific long waits, rather than just hedging blindly.
