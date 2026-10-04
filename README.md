@@ -165,7 +165,7 @@ python -m bench.run_benchmark --trials 2000 --k 4 16 --suite harsh --include-b3 
 - NN/B3 RMSE ratio = **0.945** → ✅ PASS (≤ 1.10)
 - NN cov95 = **0.965** → ✅ PASS (in [0.93, 0.97])
 
-**Summary**: NN passes the RMSE criterion at both drift levels. It passes the coverage criterion cleanly at drift 3 rad, and marginally fails at drift 2 rad (0.973 vs upper bound 0.97 — one trial over 2000). The NN is genuinely better calibrated than B3 under drift, but leans slightly wide.
+**Summary**: NN passes the RMSE criterion at both drift levels. It passes the coverage criterion cleanly at drift 3 rad, and marginally fails at drift 2 rad (0.973 vs upper bound 0.97 — one trial over 2000). The NN met the coverage criteria at 3 rad, and slightly over-covered at 2 rad (conservative).
 
 ---
 
@@ -216,7 +216,7 @@ B3 wins on coverage under shape mismatch. NN is slightly wider but still well-co
 | 3 | B3 | 0.374 | 0.903 |
 | 3 | **NN** | **0.353** | **0.965** |
 
-NN beats B3 on RMSE at drift ≥ 2 rad and stays better calibrated at all drift levels.
+NN meets non-inferiority on RMSE at drift ≥ 2 rad and stays better calibrated at all drift levels.
 
 ---
 
