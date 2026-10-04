@@ -218,10 +218,9 @@ This pattern is the strongest evidence for the mechanism: at k=4, variance acros
 ### Mechanism Test (Dispersion-Binned Width)
 A test requiring no retraining: we binned 2,000 Drift 3 rad (k=16) trials into terciles by their raw over-dispersion (OD).
 *   **Low OD Tercile:** Full NN Coverage = 0.958, Ablation Coverage = 0.958
-*   **Mid OD Tercile:** Full NN Coverage = 0.967, Ablation Coverage = 0.967
-*   **High OD Tercile:** Full NN Coverage = **0.975**, Ablation Coverage = **0.963**
+*   **High OD Tercile:** Full NN Coverage = 0.975, Ablation Coverage = 0.963
 
-This is consistent with the hypothesis: the ablation network under-covers in the high-dispersion tercile relative to its low-dispersion baseline, while the full network dynamically expands its coverage specifically where dispersion is high.
+Both networks are conservative everywhere. The dispersion-aware network widens slightly more on high-dispersion trials (width x1.06; coverage 0.975 vs 0.963, difference within noise). The hypothesis that the ablation would under-cover failed to appear. The strongest mechanism evidence remains that the RMSE gain appears at k=16 and not at k=4, which was a prediction that could have failed and didn\'t.
 
 ### σnference Latency
 σn a simple loop (k=16):
