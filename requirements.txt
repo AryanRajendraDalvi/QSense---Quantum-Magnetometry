@@ -13,3 +13,5 @@ pytest>=8.0
 # Qiskit crosscheck (optional, for test_qiskit_crosscheck.py)
 # qiskit>=1.0
 # qiskit-aer>=0.15
+
+plotly>=5.0.0

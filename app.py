@@ -12,7 +12,7 @@ from core.physics import TAUS_US, omega_from_b, b_from_omega, probability_zero
 from core.sim import Noise, simulate
 from est.bayes import summary as bayes_summary
 try:
-    from est.nn_infer import summary as nn_summary, load_weights
+    from est.nn_infer import summary as nn_summary
     NN_AVAILABLE = True
 except ImportError:
     NN_AVAILABLE = False
@@ -63,7 +63,7 @@ with tab_single:
         results["B3 (+Shape margin.)"] = bayes_summary(counts, n, "nuisance_shape")
         
         if NN_AVAILABLE and Path("artifacts/nn_weights.npz").exists():
-            load_weights("artifacts/nn_weights.npz")
+
             results["NN (Amortized)"] = nn_summary(counts, n, repeat_counts=rep_counts)
             
         fig_post = go.Figure()
